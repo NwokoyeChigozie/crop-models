@@ -29,25 +29,25 @@ class Model:
     # Define models and their hyperparameters for grid search
     models = {
         "Linear Regression": {"model": LinearRegression(), "params": {}},
-        # "Random Forest": {
-        #     "model": RandomForestRegressor(),
-        #     "params": {"n_estimators": [50, 100, 150]},
-        # },
-        # "Gradient Boosting": {
-        #     "model": GradientBoostingRegressor(),
-        #     "params": {
-        #         "n_estimators": [50, 100, 150],
-        #         "learning_rate": [0.01, 0.1, 0.5],
-        #     },
-        # },
-        # "Support Vector Machine": {
-        #     "model": SVR(),
-        #     "params": {"C": [1, 10, 100], "kernel": ["linear", "rbf"]},
-        # },
-        # "Decision Tree": {
-        #     "model": DecisionTreeRegressor(),
-        #     "params": {"max_depth": [None, 10, 20, 30]},
-        # },
+        "Random Forest": {
+            "model": RandomForestRegressor(),
+            "params": {"n_estimators": [50, 100, 150]},
+        },
+        "Gradient Boosting": {
+            "model": GradientBoostingRegressor(),
+            "params": {
+                "n_estimators": [50, 100, 150],
+                "learning_rate": [0.01, 0.1, 0.5],
+            },
+        },
+        "Support Vector Machine": {
+            "model": SVR(),
+            "params": {"C": [1, 10, 100], "kernel": ["linear", "rbf"]},
+        },
+        "Decision Tree": {
+            "model": DecisionTreeRegressor(),
+            "params": {"max_depth": [None, 10, 20, 30]},
+        },
     }
 
     label_encoder_crop = LabelEncoder()
