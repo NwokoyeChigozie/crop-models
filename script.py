@@ -54,6 +54,7 @@ class Model:
     label_encoder_state = LabelEncoder()
     scaler = StandardScaler()
     model = None
+    models_dict = {}
 
     def __init__(self, data_path: str):
         file = File(data_path)
@@ -101,6 +102,8 @@ class Model:
             model = grid_search.best_estimator_
             mse = mean_squared_error(self.y_test, model.predict(self.X_test))
 
+            self.models_dict[model_name] = [model, mse]
+
             # Print results
             print(f"{model_name}: Mean Squared Error: {mse}")
 
@@ -127,6 +130,30 @@ class Model:
             print("Mathematical Model:", equation)
         else:
             print("not linear regression")
+
+    def get_results_for_all_models(
+        self,
+        crop: str,
+        state: str,
+        relative_humidity: float = 50,
+        min_tempeature: float = 28,
+        max_tempeature: float = 30,
+        sunshine: float = 1000,
+        rain_fall: float = 2000,
+    ):
+        for model_name, arr in self.models.items():
+            print("////////////////////////////////////////////////")
+            print("////////////////////////////////////////////////")
+            print(f"GET RESULTS FOR {model_name}")
+            self.predict_output(
+                crop,
+                state,
+                relative_humidity,
+                min_tempeature,
+                max_tempeature,
+                sunshine,
+                rain_fall,
+            )
 
     def get_area(self, state: str, crop: str) -> float:
         filtered_df = self.raw_data[
@@ -217,9 +244,21 @@ prediction_params = [
 ]
 
 
+# for obj in prediction_params:
+#     for state in states:
+#         modelObject.predict_output(
+#             obj["crop"],
+#             state,
+#             obj["relative_humidity"],
+#             obj["min_tempeature"],
+#             obj["max_tempeature"],
+#             obj["sunshine"],
+#             obj["rain_fall"],
+#         )
+
 for obj in prediction_params:
     for state in states:
-        modelObject.predict_output(
+        modelObject.get_results_for_all_models(
             obj["crop"],
             state,
             obj["relative_humidity"],
@@ -230,4 +269,4 @@ for obj in prediction_params:
         )
 
 
-modelObject.get_mathematical_model()
+# modelObject.get_mathematical_model()
