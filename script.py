@@ -29,25 +29,25 @@ class Model:
     # Define models and their hyperparameters for grid search
     models = {
         "Linear Regression": {"model": LinearRegression(), "params": {}},
-        "Random Forest": {
-            "model": RandomForestRegressor(),
-            "params": {"n_estimators": [50, 100, 150]},
-        },
-        "Gradient Boosting": {
-            "model": GradientBoostingRegressor(),
-            "params": {
-                "n_estimators": [50, 100, 150],
-                "learning_rate": [0.01, 0.1, 0.5],
-            },
-        },
-        "Support Vector Machine": {
-            "model": SVR(),
-            "params": {"C": [1, 10, 100], "kernel": ["linear", "rbf"]},
-        },
-        "Decision Tree": {
-            "model": DecisionTreeRegressor(),
-            "params": {"max_depth": [None, 10, 20, 30]},
-        },
+        # "Random Forest": {
+        #     "model": RandomForestRegressor(),
+        #     "params": {"n_estimators": [50, 100, 150]},
+        # },
+        # "Gradient Boosting": {
+        #     "model": GradientBoostingRegressor(),
+        #     "params": {
+        #         "n_estimators": [50, 100, 150],
+        #         "learning_rate": [0.01, 0.1, 0.5],
+        #     },
+        # },
+        # "Support Vector Machine": {
+        #     "model": SVR(),
+        #     "params": {"C": [1, 10, 100], "kernel": ["linear", "rbf"]},
+        # },
+        # "Decision Tree": {
+        #     "model": DecisionTreeRegressor(),
+        #     "params": {"max_depth": [None, 10, 20, 30]},
+        # },
     }
 
     label_encoder_crop = LabelEncoder()
@@ -113,6 +113,20 @@ class Model:
 
         self.model = best_model
         return best_model
+
+    def get_mathematical_model(self):
+        if isinstance(self.model, LinearRegression):
+            coefficients = self.model.coef_
+            intercept = self.model.intercept_
+            equation = "Output = "
+            for i in range(len(coefficients)):
+                equation += f"({coefficients[i]} * X{i}) + "
+            equation += str(intercept)
+            print("")
+            print("")
+            print("Mathematical Model:", equation)
+        else:
+            print("not linear regression")
 
     def get_area(self, state: str, crop: str) -> float:
         filtered_df = self.raw_data[
@@ -214,3 +228,6 @@ for obj in prediction_params:
             obj["sunshine"],
             obj["rain_fall"],
         )
+
+
+modelObject.get_mathematical_model()
